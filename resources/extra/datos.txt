@@ -1,0 +1,121 @@
+Paises que tiene 2 o mas vectores:
+
+India
+Japon
+Morocco
+Indonesia
+
+
+-----------------------header: 
+
+    <header class="header">
+        <h1 class="title">Countries</h1>
+        <nav class="nav">
+        <table class="table-nav">
+            <tr>
+                <th><a href="#">Inicio</a></th>
+                <th><a href="#">Acerca de</a></th>
+                <th><a href="#">Servicios</a></th>
+                <th><a href="#">Contacto</a></th>
+            </tr>
+        </table>
+
+        <input type="text" class="input-search-countries">
+        <button class="button-search-country">Buscar</button>
+
+        </nav>
+
+
+    </header>
+
+    -----------------CSS del header: 
+    
+.header {
+    background-color: coral;
+    width: 100%;
+    height: 15%;
+
+    /*fijar en la parte superior del navegador*/
+    position: fixed;
+
+    /*asegurar que inicie en la parte superior izquierda*/
+    top: 0;
+    left: 0;
+}
+
+.title {
+    font-size: 75px;
+    position: relative;
+    left: 5%;
+    bottom: 20%;
+}
+
+.nav {
+    font-size: 20px;
+    display: table;
+    position: relative;
+    bottom: 110%;
+    left: 24%;
+}
+
+.table-nav {
+    border-spacing: 20px;
+}
+
+.input-search-countries {
+    border-radius: 10px;
+    font-size: 20px;
+    position: absolute;
+    top: 30%;
+    left: 110%;
+    width: 200%;
+}
+
+.button-search-country {
+    border-radius: 10px;
+    font-size: 20px;
+    position: absolute;
+    top: 30%;
+    left: 292%;
+
+}
+
+------------get name: 
+var enlacesSvg = document.querySelectorAll(".country");
+
+
+
+// Agregar un event listener a cada elemento <path>
+enlacesSvg.forEach(function (enlaceSvg) {
+    enlaceSvg.addEventListener("click", function (event) {
+        // Detener el comportamiento predeterminado del enlace
+        event.preventDefault();
+        // Obtener el valor del atributo xlink:title del elemento <path> actual
+        var titulo = enlaceSvg.getAttribute("xlink:title");
+        // Mostrar el valor del título en la consola (puedes hacer lo que quieras con este valor)
+        console.log(titulo);
+
+        var xhttp = new XMLHttpRequest();
+
+        // Definir la función de retorno de llamada cuando la solicitud se complete
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // La solicitud se ha completado y la respuesta del servidor está lista
+                try {
+                    console.log(this.responseText); // Muestra la respuesta del servidor en la consola del navegador
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            }
+        };
+
+        // Abrir una nueva solicitud AJAX
+        xhttp.open("POST", "apiconsumer.php", true);
+
+        // Establecer el encabezado de la solicitud para indicar que se enviarán datos de formulario
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        // Enviar la solicitud con los datos que deseas enviar al servidor
+        xhttp.send(titulo);
+    });
+});
