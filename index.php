@@ -1,10 +1,7 @@
 <?php
     include 'apiconsumer.php';
-    include 'controller.php';
-
+    
     $consumer = new apiconsumer();
-
-    $controller = new controller();
 
 ?>
 
@@ -306,7 +303,7 @@
                             -9 -44 17 -44 52 0 47 -8 64 -41 81 -20 10 -29 22 -29 39 0 13 -11 35 -25 49
                             -14 14 -25 34 -25 44 0 21 -25 47 -55 55 -15 5 -26 -3 -43 -30z" />
                     </a>
-                    <a class="country" xlink:href="#" xlink:title="Alaska (USA)">
+                    <a class="country" xlink:href="#" xlink:title="United States of America">
                         <path d="M1418 9052 c-32 -10 -67 -28 -80 -43 -16 -17 -40 -29 -69 -33 -55 -8
                             -58 -10 -98 -68 -27 -41 -40 -50 -86 -64 -49 -14 -67 -34 -30 -34 31 0 68 -26
                             86 -62 14 -28 26 -38 43 -38 32 0 115 -67 116 -93 0 -11 -65 -37 -93 -37 -13
@@ -1312,7 +1309,6 @@
             </svg>
         </div>
     </main>
-    <script src="resources/js/jquery-3.7.1.min.js"></script>
     <script src="resources/js/getname.js"></script>
     
 </body>

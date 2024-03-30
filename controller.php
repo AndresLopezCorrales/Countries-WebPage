@@ -11,17 +11,14 @@ class controller{
             // Realizar cualquier procesamiento necesario con el título
             
             // Devolver el título de manera normal
-            echo $titulo;
+            return $titulo;
         } else {
             // Si no se recibió el título, devolver un mensaje de error
-            echo "Error: No se recibió ningún título.";
+            return "";
         }
 
 
     }
-
-
-
 
 }
 

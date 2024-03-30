@@ -1,0 +1,12 @@
+
+* Checar lo de escribir el país que no sea en ingles - COMPLETADO
+
+* Checar lo de los espacios en la solicitud URL - COMPLETADO
+
+* checar los xlink:title de cada pais si es necesario - COMPLETADO
+
+* Poner en Gris las areas que no son clickeables
+
+*mover carpetas para que sea mas legible
+
+* Diseño

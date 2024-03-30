@@ -13,9 +13,24 @@ class apiconsumer{
 
     // Get common name of the country
     function getSearchBarInfo(){
-        try {
+        include "controller.php";
+        include 'getattributes.php';
 
-        $nameCountry = $this->searchBar();
+        $getAttribute = new Attributes();
+        $getNameClick = new controller();
+
+        $allAttributes = [];
+
+        try {
+            $nameCountry = $this->searchBar();
+
+            if($nameCountry == ""){
+                $nameCountry = $getNameClick->clickCountries();
+            }else{
+                $nameCountry = $this->searchBar();
+            }
+
+            $nameCountry = str_replace(" ", "%20", $nameCountry);
 
         if($nameCountry != "") {
             
@@ -42,13 +57,29 @@ class apiconsumer{
             // Procesar la respuesta (puede ser JSON, XML, etc.)
             $data = json_decode($response, true); // Decodificar la respuesta JSON a un array asociativo
 
-            if(isset($data[0]['name']['common'])) {
-                $commonName = $data[0]['name']['common'];
-                return $commonName;
-            } else {
-                $commonName = "No existe";
-                return $commonName;
-            }
+            
+            $commonName = $getAttribute->getCommonName($data); //Common Name
+            $officialName = $getAttribute->getOfficialName($data); //Official Name
+            $region = $getAttribute->getRegion($data);
+            $population = $getAttribute->getPopulation($data);
+            $capital = $getAttribute->getCapital($data);
+            $language = $getAttribute->getLanguage($data);
+            $timezone = $getAttribute->getTimezone($data);
+            $flag = $getAttribute->getFlag($data);
+
+            $allAttributes[] = $commonName;
+            $allAttributes[] = $officialName;
+            $allAttributes[] = $region;
+            $allAttributes[] = $population;
+            $allAttributes[] = $capital;
+            $allAttributes[] = $language;
+            $allAttributes[] = $timezone;
+            $allAttributes[] = $flag;
+            
+
+
+            return $allAttributes;
+            
     }
         } catch (Exception $e) {
             // Manejar la excepción y mostrar un mensaje personalizado
@@ -58,8 +89,35 @@ class apiconsumer{
     }
 
     function menu(){
-        echo "<h1>" . $this->getSearchBarInfo() . "</h1>";
+        // Obtener la información de la barra de búsqueda
+        $searchInfo = $this->getSearchBarInfo();
+    
+        // Verificar si la información de búsqueda es un array válido
+        if (is_array($searchInfo) && count($searchInfo) > 0) {
+            // Obtener el nombre común del país desde la información de búsqueda
+            $commonName = $searchInfo[0];
+            $officialName = $searchInfo[1];
+            $region = $searchInfo[2];
+            $population = $searchInfo[3];
+            $capital = $searchInfo[4];
+            $language = $searchInfo[5];
+            $timezone = $searchInfo[6];
+            $flag = $searchInfo[7];
+
+            
+            // Mostrar el nombre común en un encabezado h1
+            echo "<h1>" . $commonName . "</h1>";
+            echo "<h1>" . $officialName . "</h1>";
+            echo "<h1>" . $region . "</h1>";
+            echo "<h1>" . $population . "</h1>";
+            echo "<h1>" . $capital . "</h1>";
+            echo "<h1>" . $language . "</h1>";
+            echo "<h1>" . $timezone . "</h1>";
+            echo "<img src='$flag'>";
+        } 
     }
+
+    
 
 }
 
