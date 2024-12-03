@@ -56,13 +56,15 @@
 
         //get Language
         function getLanguage($data) {
+            $idiomas = [];
             if (isset($data[0]['languages'])) {
                 $languages = $data[0]['languages'];
         
                 // Iterar sobre las entradas del arreglo de idiomas
                 foreach ($languages as $key => $value) {
-                    return $value; // Devolver el primer valor encontrado
+                    $idiomas[] = $value;
                 }
+                return $idiomas;
             }else {
                 return "";
             }
