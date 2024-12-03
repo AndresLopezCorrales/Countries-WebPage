@@ -1,4 +1,6 @@
+
 <?php
+    //Incluir este archivo para el menu
     include 'controller/ApiConsumer.php';
     
     $consumer = new ApiConsumer();
@@ -17,10 +19,8 @@
 
 <body>
 
-
+    <!--Buscador de países-->
     <header>
-
-
     <form method="post">
         <input type="text" name="search" id="search-countries">
         <button type="submit" name="submit">Buscar</button>
@@ -28,6 +28,7 @@
 
     </header>
 
+        <!--MAPA SVG del mundo-->
         <div class="otro">
         <div class="map-div">
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920.000000 1152.000000">
@@ -1311,8 +1312,10 @@
         </div>
     
 
+    <!--Info del país-->
     <?=$consumer->menu()?>
 
+    <!--JS get name-->
     <script src="./resources/js/getname.js"></script>
     
 </body>
