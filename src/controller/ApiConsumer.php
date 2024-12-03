@@ -3,15 +3,17 @@
 class ApiConsumer{
 
     function searchBar(){
+        
+        //Confirmar que exista
         if(isset($_POST["submit"]) && isset($_POST["search"])){
+            //Obtener el valor del input de busqueda
             $texto = $_POST["search"];
         } else {
-            $texto = ""; // Valor predeterminado si no se encuentra el valor en $_POST["search"]
+            $texto = "";
         }
         return $texto;
     }
 
-    // Get common name of the country
     function getSearchBarInfo(){
         include "./controller/GetNameController.php";
         include './controller/GetAttributesController.php';
@@ -21,6 +23,7 @@ class ApiConsumer{
 
         $allAttributes = [];
 
+        //SI se utiliza el buscador
         try {
             $nameCountry = $this->searchBar();
 
@@ -34,32 +37,35 @@ class ApiConsumer{
 
         if($nameCountry != "") {
             
+            //API
             $url = "https://restcountries.com/v3.1/name/$nameCountry"; // URL de la API que deseas consumir
+
 
             ini_set('http_errors', 0);
 
-            // Crear un contexto de flujo para configurar opciones adicionales
             $context = stream_context_create([
                 'http' => [
                     'ignore_errors' => true // Ignorar errores de HTTP
                 ]
             ]);
 
-            // Realizar la solicitud a la API con el contexto de flujo
+            // Realizar la solicitud a la API
             $response = file_get_contents($url, false, $context);
                     
             // Verificar si se obtuvo una respuesta válida
             if ($response === false) {
-            // Manejar el error
                 throw new Exception('Error al obtener la respuesta de la API');
             }
 
-            // Procesar la respuesta (puede ser JSON, XML, etc.)
-            $data = json_decode($response, true); // Decodificar la respuesta JSON a un array asociativo
+            // Procesar la respuesta
+            $data = json_decode($response, true);
 
-            
-            $commonName = $getAttribute->getCommonName($data); //Common Name
-            $officialName = $getAttribute->getOfficialName($data); //Official Name
+            if(isset($data["status"]) && $data["status"] = 404){
+                echo "Doesn't exist. Try with the official name or the english name";
+
+            }else{
+            $commonName = $getAttribute->getCommonName($data);
+            $officialName = $getAttribute->getOfficialName($data);
             $region = $getAttribute->getRegion($data);
             $population = $getAttribute->getPopulation($data);
             $capital = $getAttribute->getCapital($data);
@@ -67,22 +73,32 @@ class ApiConsumer{
             $timezone = $getAttribute->getTimezone($data);
             $flag = $getAttribute->getFlag($data);
 
+            //Recorrer todos los idiomas
+            $idiomas = [];
+            foreach($language as $lang){
+                $idiomas[] =  $lang;
+            }
+
+            $idiomasString = implode(", ", $idiomas); //Array -> String
+
+            //Toda la información dentro de un array
             $allAttributes = [    
                                 $commonName, 
                                 $officialName, 
                                 $region, 
                                 $population, 
                                 $capital, 
-                                $language, 
+                                $idiomasString, 
                                 $timezone, 
                                 $flag
                         ];
+            }
             
             return $allAttributes;
             
     }
         } catch (Exception $e) {
-            // Manejar la excepción y mostrar un mensaje personalizado
+            // Error
             return "Error: No se pudo obtener la información del país.";
         }
             
@@ -94,7 +110,7 @@ class ApiConsumer{
     
         // Verificar si la información de búsqueda es un array válido
         if (is_array($searchInfo) && count($searchInfo) > 0) {
-            // Obtener el nombre común del país desde la información de búsqueda
+
             $commonName = $searchInfo[0];
             $officialName = $searchInfo[1];
             $region = $searchInfo[2];
@@ -104,6 +120,7 @@ class ApiConsumer{
             $timezone = $searchInfo[6];
             $flag = $searchInfo[7];
 
+            //Seleccionar imagen dependiendo de la region
             switch($region){
                 case "Africa":
                     $imagenReg = "./resources/img/africa.png";
@@ -122,8 +139,8 @@ class ApiConsumer{
                     break;
             
             }
-            
-            // Mostrar el nombre común en un encabezado h1
+
+            //Lo que se verá en la página
 
             echo "<div class='container-info'>
                     <h1> $commonName </h1>
@@ -134,7 +151,7 @@ class ApiConsumer{
                         <h2>Data</h2>
                         <h4>Capital: $capital </h4>
                         <h4>Population: $population </h4>
-                        <h4>Language: $language</h4>
+                        <p>Languages: $language </p>
                         <h4>Timezone: $timezone</h4>
                     </div>
 
@@ -144,8 +161,9 @@ class ApiConsumer{
 
                     </div>
 
-                    <!--hola-->
                 </div>";
+
+                
 
         } 
     }
