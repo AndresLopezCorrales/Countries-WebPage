@@ -50,7 +50,12 @@ class ApiConsumer{
             ]);
 
             // Realizar la solicitud a la API
-            $response = file_get_contents($url, false, $context);
+            try{
+                $response = file_get_contents($url, false, $context);
+            }catch(Exception $e){
+                echo "<p class='text-center text-2xl p-4 m-1 text-brown-super-hard font-semibold'>Doesn't exist. Try with the official name or the english name.</p>";
+            }
+            
                     
             // Verificar si se obtuvo una respuesta válida
             if ($response === false) {
@@ -60,8 +65,8 @@ class ApiConsumer{
             // Procesar la respuesta
             $data = json_decode($response, true);
 
-            if(isset($data["status"]) && $data["status"] = 404){
-                echo "Doesn't exist. Try with the official name or the english name";
+            if(isset($data["status"]) && $data["status"] === 404 || isset($data["message"]) && $data["message"] === "Page Not Found"){
+                echo "<p class='text-center text-2xl p-4 m-1 text-brown-super-hard font-semibold'>Doesn't exist. Try with the official name or the english name.</p>";
 
             }else{
             $commonName = $getAttribute->getCommonName($data);
@@ -142,34 +147,29 @@ class ApiConsumer{
 
             //Lo que se verá en la página
 
-            echo "<div class='container-info'>
-                    <h1> $commonName </h1>
-                    <h2>$officialName</h2>
-                    <img src='$flag'>
+            echo "<div class='container-info flex flex-col justify-center items-center p-8 text-brown-super-hard'>
 
-                    <div>
-                        <h2>Data</h2>
-                        <h4>Capital: $capital </h4>
-                        <h4>Population: $population </h4>
-                        <p>Languages: $language </p>
-                        <h4>Timezone: $timezone</h4>
+                    <div class='text-center p-1'>
+                        <h1 class='text-5xl p-1 font-extrabold'> $commonName </h1>
+                        <h2 class='text-[1rem] p-1 font-thin'>$officialName</h2>
+                        <img src='$flag' class='p-1'>
                     </div>
 
-                    <div> 
-                        <h2>Region: $region</h2>
-                        <img src= '$imagenReg'>
+                    <div class='flex flex-col justify-center items-center p-1'>
+                        <strong class='text-2xl text-brown-hard'>Capital</strong> <p class='text-xl font-semibold p-1'> $capital </p>
+                        <strong id='population' class='text-2xl text-brown-hard'>Population</strong> <p class='text-xl font-semibold p-1'> $population </p>
+                        <strong class='text-2xl text-brown-hard'>Languages</strong> <p class='text-xl font-semibold text-center p-1'> $language </p>
+                        <strong class='text-2xl text-brown-hard'>Timezone</strong> <p class='text-xl font-semibold p-1'> $timezone</p>
+                    </div>
 
+                    <div class='flex flex-col justify-center items-center p-1' id='regionn'> 
+                        <strong class='text-3xl'>Region</strong> <p class='text-brown-hard text-xl font-semibold p-1'>$region</p>
+                        <img id='imagenReg' src= '$imagenReg' class=''>
                     </div>
 
                 </div>";
-
-                
-
         } 
     }
-
-    
-
 }
 
 ?>
