@@ -24,7 +24,7 @@
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="./index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
                     
-                    <img src="" class="h-16" alt="Flowbite Logo" />
+                    <img src="" class="h-16" alt="Logo" />
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-brown-low" title="Hecho por Andrés López Corrales">Country-Click</span>
                 </a>
 
