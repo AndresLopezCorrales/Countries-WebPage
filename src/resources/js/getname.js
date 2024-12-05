@@ -1,5 +1,6 @@
 
 //Selecciona todas las etiquetas country
+
 var enlacesSvg = document.querySelectorAll(".country");
 
 enlacesSvg.forEach(function (enlaceSvg) {
@@ -29,3 +30,5 @@ enlacesSvg.forEach(function (enlaceSvg) {
 
     });
 });
+
+
