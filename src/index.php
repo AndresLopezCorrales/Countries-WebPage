@@ -8,7 +8,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="font-serif scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -17,21 +17,46 @@
     <link rel="stylesheet" href="./output.css">
 </head>
 
-<body>
+<body class="bg-brown-low">
 
-    <!--Buscador de países-->
-    <header>
-    <form method="post">
-        <input type="text" name="search" id="search-countries">
-        <button type="submit" name="submit">Buscar</button>
-    </form>
+<!--NAV BAR-->
+        <nav class="bg-brown-low border-brown-medium dark:bg-brown-super-hard">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="./index.php" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    
+                    <img src="" class="h-16" alt="Flowbite Logo" />
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-brown-low" title="Hecho por Andrés López Corrales">Country-Click</span>
+                </a>
 
-    </header>
+                <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" id="navbar-cta">
+                    <ul class="flex flex-col font-medium p-4 md:p-0 border border-brown-medium rounded-lg bg-brown-low md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-brown-low dark:bg-brown-hard md:dark:bg-brown-super-hard dark:border-amber-950">
+                        <li class="flex flex-row">
+                            <!--INFO-->
+                            <button class="mr-1" popovertarget="mi-pop">                    
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="30px" height="30px" fill-rule="nonzero"><g fill="#6c3400" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8.53333,8.53333)"><path d="M15,3c-6.627,0 -12,5.373 -12,12c0,6.627 5.373,12 12,12c6.627,0 12,-5.373 12,-12c0,-6.627 -5.373,-12 -12,-12zM16,21h-2v-7h2zM15,11.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5z"></path></g></g></svg>
+                            </button>
+                            <!--Buscador de países-->
+                            <form method="post" class="">
+                                <input type="text" name="search" id="search-countries" placeholder="Search for a country" class="bg-brown-low rounded-lg p-1">
+                                <button type="submit" name="submit" class="rounded-lg p-1 text-brown-low w-20 border border-amber-950 hover:bg-amber-950 md:border-brown-medium">Buscar</button>
+                            </form>                
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!--POPOVER INFO SOBRE WEBPAGE-->
+        <div id="mi-pop" popover class="bg-brown-super-hard text-center">
+        <p class="text-brown-medium font-bold p-4">Esta página funciona con los nombres de los países en inglés o por su nombre oficial.</p>
+        <p class="text-brown-medium font-bold p-4">The country names are ONLY VALID if they are in the english language or putting their official name.</p>
+        </div>
 
         <!--MAPA SVG del mundo-->
-        <div class="otro">
-        <div class="map-div">
-            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920.000000 1152.000000">
+        <div class="map-div flex flex-col justify-center items-center md:flex-row">
+
+            <svg class="svg min-h-fit flex-grow-[4] md:w-4/5" id="svg-div" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920.000000 1152.000000">
                 <g transform="translate(0.000000,1152.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
                     <a class="country" xlink:href="#" xlink:title="Greenland">
                         <path d="M7305 10538 c-16 -6 -43 -20 -59 -31 -25 -18 -33 -19 -61 -8 -26 9
@@ -1308,13 +1333,16 @@
                     </a>
                 </g>
             </svg>
+
+            <div class="info-pais flex-grow md:w-1/5" id="div-info">
+                <!--Info del país-->
+                <?=$consumer->menu()?>
+                
+            </div>
+            
         </div>
-        </div>
+        
     
-
-    <!--Info del país-->
-    <?=$consumer->menu()?>
-
     <!--JS get name-->
     <script src="./resources/js/getname.js"></script>
     
